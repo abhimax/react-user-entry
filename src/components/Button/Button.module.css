@@ -1,12 +1,12 @@
-.btn{
-    padding: 0.5rem 1.5rem;
-    background-color: darkslateblue;
-    font-size: 1.25rem;
-    border-radius: 0.5rem;
-    border: 1px solid rgb(27, 23, 52);
-    color: rgb(255, 255, 255);
+.btn {
+  padding: 0.5rem 1.5rem;
+  background-color: darkslateblue;
+  font-size: 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(27, 23, 52);
+  color: rgb(255, 255, 255);
 }
-.btn:hover{
-    background-color: rgb(45, 38, 89);
-    cursor: pointer;
+.btn:hover {
+  background-color: rgb(45, 38, 89);
+  cursor: pointer;
 }

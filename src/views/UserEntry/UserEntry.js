@@ -1,20 +1,19 @@
 import { useState } from "react";
 import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
+import ErrorModal from "../../components/ErrorModal/ErrorModal";
+
 import Input from "../../components/Input/Input";
 import styles from "./UserEntry.module.css";
 
 const UserEntry = ({ onAddUser }) => {
   const nameChangeHandler = (value) => {
-    console.log("uname -from userEntry ", value);
-
     setUser((prevState) => {
       return { ...prevState, name: value };
     });
   };
 
   const ageChangeHandler = (value) => {
-    console.log("age -from userEntry ", value);
     setUser((prevState) => {
       return { ...prevState, age: value };
     });
@@ -25,12 +24,26 @@ const UserEntry = ({ onAddUser }) => {
     age: "",
   });
 
+  const [error, setError] = useState(null);
+
   const SubmitHandler = (event) => {
     event.preventDefault();
-    if (user.name.length == 0 || user.age.length == 0) {
-      alert("Please enter valid name and age (Non empty values).");
+    if (user.name.trim().length === 0 || user.age.trim().length === 0) {
+      setError((prevState) => {
+        return {
+          ...prevState,
+          title: "Invalid Input Values!",
+          message: "Please enter valid name and age (Non empty values).",
+        };
+      });
     } else if (user.age < 0) {
-      alert("Please enter a valid age (>0).");
+      setError((prevState) => {
+        return {
+          ...prevState,
+          title: "Invalid Age!",
+          message: "Please enter a valid age (>0).",
+        };
+      });
     } else {
       onAddUser(user);
       setUser((prevState) => {
@@ -39,9 +52,19 @@ const UserEntry = ({ onAddUser }) => {
     }
   };
 
+  const onConfirmHandler = () => {
+    setError(null);
+  };
+
   return (
     <Card className={styles["user-entry"]}>
-      <span>{JSON.stringify(user)}</span>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={onConfirmHandler}
+        />
+      )}
       <form onSubmit={SubmitHandler}>
         <Input
           id="uName"
