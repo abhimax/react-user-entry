@@ -4,7 +4,7 @@
     font-size: 1.25rem;
     border-radius: 0.5rem;
     border: 1px solid rgb(27, 23, 52);
-    color: wheat;
+    color: rgb(255, 255, 255);
 }
 .btn:hover{
     background-color: rgb(45, 38, 89);

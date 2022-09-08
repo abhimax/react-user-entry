@@ -4,11 +4,13 @@ import Input from "../../components/Input/Input";
 import User from "../User/User";
 import styles from "./UserList.module.css";
 
-const UserList = () => {
+const UserList = ({users}) => {
+  console.log('From UserList >>',users);
   return (
     <Card className={styles['user-view']}>
-      <User name="Tim" age="34"/>
-      <User name="Max" age="29"/>
+      {
+        users && users.map( (item,key) => { return <User name={item.name} age={item.age} key={key}/> })
+      }
     </Card>
   );
 };

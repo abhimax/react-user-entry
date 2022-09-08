@@ -1,9 +1,12 @@
 import styles from "./Input.module.css";
-const Input = ({ labelText, type, value }) => {
+const Input = ({ id,labelText, type, value, onChange }) => {
+const setValue = (event) =>{
+    onChange(event.target.value);
+}
   return (
     <div className={styles['input-container']}>
-      <label className={styles['input-label']}>{labelText}</label>
-      <input type={type} value={value} className={styles['input']}/>
+      <label htmlFor={id} className={styles['input-label']}>{labelText}</label>
+      <input id={id} type={type} value={value} className={styles['input']} onChange={setValue}/>
     </div>
   );
 };
