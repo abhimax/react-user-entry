@@ -23,4 +23,5 @@ const UserList = ({ users }) => {
     </>
   );
 };
+
 export default UserList;
