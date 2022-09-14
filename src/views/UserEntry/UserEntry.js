@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "../../components/Button/Button";
 import Card from "../../components/Card/Card";
 import ErrorModal from "../../components/ErrorModal/ErrorModal";
@@ -7,28 +7,34 @@ import Input from "../../components/Input/Input";
 import styles from "./UserEntry.module.css";
 
 const UserEntry = ({ onAddUser }) => {
-  const nameChangeHandler = (value) => {
-    setUser((prevState) => {
-      return { ...prevState, name: value };
-    });
-  };
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
 
-  const ageChangeHandler = (value) => {
-    setUser((prevState) => {
-      return { ...prevState, age: value };
-    });
-  };
+  // const nameChangeHandler = (value) => {
+  //   setUser((prevState) => {
+  //     return { ...prevState, name: value };
+  //   });
+  // };
 
-  const [user, setUser] = useState({
-    name: "",
-    age: "",
-  });
+  // const ageChangeHandler = (value) => {
+  //   setUser((prevState) => {
+  //     return { ...prevState, age: value };
+  //   });
+  // };
+
+  // const [user, setUser] = useState({
+  //   name: "",
+  //   age: "",
+  // });
 
   const [error, setError] = useState(null);
 
   const SubmitHandler = (event) => {
+    const enteredName = nameInputRef.current.value;
+    const enteredAge = ageInputRef.current.value;
+
     event.preventDefault();
-    if (user.name.trim().length === 0 || user.age.trim().length === 0) {
+    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
       setError((prevState) => {
         return {
           ...prevState,
@@ -36,7 +42,7 @@ const UserEntry = ({ onAddUser }) => {
           message: "Please enter valid name and age (Non empty values).",
         };
       });
-    } else if (user.age < 0) {
+    } else if (enteredAge < 0) {
       setError((prevState) => {
         return {
           ...prevState,
@@ -45,10 +51,12 @@ const UserEntry = ({ onAddUser }) => {
         };
       });
     } else {
-      onAddUser(user);
-      setUser((prevState) => {
-        return { ...prevState, name: "", age: "" };
-      });
+      onAddUser({ name: enteredName, age: enteredAge });
+      nameInputRef.current.value = "";
+      ageInputRef.current.value = "";
+      // setUser((prevState) => {
+      //   return { ...prevState, name: "", age: "" };
+      // });
     }
   };
 
@@ -70,15 +78,14 @@ const UserEntry = ({ onAddUser }) => {
           id="uName"
           labelText="User Name"
           type="text"
-          onChange={nameChangeHandler}
-          value={user.name}
+          inputRef={nameInputRef}
         />
+        <input type="number" />
         <Input
           id="uAge"
           labelText="Age (Years)"
           type="number"
-          onChange={ageChangeHandler}
-          value={user.age}
+          inputRef={ageInputRef}
         />
         <div className={styles["action-btn-container"]}>
           <Button type="submit">Add User</Button>
